@@ -217,6 +217,9 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Ignore Git tokens
+*token*.txt
+
 # Manufacturing scripts outputs
 output/
 jobs/
