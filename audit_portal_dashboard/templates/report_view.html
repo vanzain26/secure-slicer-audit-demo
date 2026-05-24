@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Verification Report</h1>
+<div class="card">
+  <p><strong>Report:</strong> {{ record["report_uuid"] }}</p>
+  <p><strong>Created:</strong> {{ record["created_at"] }}</p>
+  <p><strong>Facility:</strong> {{ record["facility_id"] }}</p>
+  <p><strong>Instrument:</strong> {{ record["instrument_id"] }}</p>
+  <p><strong>Status:</strong> {{ "PASS" if record["overall_ok"] else "FAIL" }}</p>
+  <p><a href="{{ url_for('download', relative_path=record['stored_path']) }}">Download JSON report</a></p>
+</div>
+<pre>{{ report_text }}</pre>
+{% endblock %}

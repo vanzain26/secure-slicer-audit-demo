@@ -1,0 +1,8 @@
+this space uses a virtual environment 
+(python -m venv .venv)
+(.venv\Scripts\activate) or (.\.venv\Scripts\Activate.ps1)
+(pip install -r requirements.txt)
+
+run: (python app.py)
+
+(Flask should start at http://127.0.0.1:5000)

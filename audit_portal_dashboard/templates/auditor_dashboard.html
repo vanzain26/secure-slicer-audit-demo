@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Auditor Dashboard</h1>
+
+<div class="card">
+  <h3>Run Verification</h3>
+  <form method="post" action="{{ url_for('auditor_verify') }}">
+    <label>Public Batch</label><br>
+    <select name="batch_upload_id">
+      <option value="">-- select batch --</option>
+      {% for key, value in grouped.items() %}
+        {% for b in value["batches"] %}
+          <option value="{{ b['id'] }}">{{ b['facility_id'] }} / {{ b['instrument_id'] }} / {{ b['original_filename'] }}</option>
+        {% endfor %}
+      {% endfor %}
+    </select><br><br>
+
+    <label>Audit Bundle (optional)</label><br>
+    <select name="audit_upload_id">
+      <option value="">-- none --</option>
+      {% for key, value in grouped.items() %}
+        {% for a in value["bundles"] %}
+          <option value="{{ a['id'] }}">{{ a['facility_id'] }} / {{ a['instrument_id'] }} / {{ a['original_filename'] }}</option>
+        {% endfor %}
+      {% endfor %}
+    </select><br><br>
+
+    <button type="submit">Run Verification</button>
+  </form>
+</div>
+
+<h2>Stored Uploads</h2>
+{% for key, value in grouped.items() %}
+<div class="card">
+  <h3>{{ key[0] }} / {{ key[1] }}</h3>
+  <p><strong>Batches:</strong></p>
+  <ul>{% for b in value["batches"] %}<li>{{ b["original_filename"] }} ({{ b["created_at"] }})</li>{% else %}<li>None</li>{% endfor %}</ul>
+  <p><strong>Audit Bundles:</strong></p>
+  <ul>{% for a in value["bundles"] %}<li>{{ a["original_filename"] }} ({{ a["created_at"] }})</li>{% else %}<li>None</li>{% endfor %}</ul>
+</div>
+{% else %}
+<p>No uploads yet.</p>
+{% endfor %}
+
+<h2>Saved Reports</h2>
+<table>
+<tr><th>Created</th><th>Facility</th><th>Instrument</th><th>Status</th><th>Open</th></tr>
+{% for r in reports %}
+<tr>
+  <td>{{ r["created_at"] }}</td>
+  <td>{{ r["facility_id"] }}</td>
+  <td>{{ r["instrument_id"] }}</td>
+  <td>{{ "PASS" if r["overall_ok"] else "FAIL" }}</td>
+  <td><a href="{{ url_for('report_view', report_uuid=r['report_uuid']) }}">view</a></td>
+</tr>
+{% else %}
+<tr><td colspan="5">No reports yet.</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

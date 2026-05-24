@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Audit Portal</h1>
+<div class="card" style="max-width:420px;">
+<form method="post">
+<label>Username</label><br><input name="username"><br><br>
+<label>Password</label><br><input type="password" name="password"><br><br>
+<button type="submit">Login</button>
+</form>
+</div>
+<div class="card">
+<strong>Demo accounts</strong><br>
+manufacturer1 / demo123<br>
+manufacturer2 / demo123<br>
+auditor1 / demo123
+</div>
+{% endblock %}

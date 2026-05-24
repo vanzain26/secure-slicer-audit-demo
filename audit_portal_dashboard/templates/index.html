@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Audit Portal Dashboard</h1>
+
+<div class="grid">
+  <div class="card"><div>Total Uploads</div><div class="stat">{{ uploads_count }}</div></div>
+  <div class="card"><div>Total Reports</div><div class="stat">{{ reports_count }}</div></div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>Facility / Instrument Structure</h3>
+    <table>
+      <tr><th>Facility</th><th>Instrument</th><th>Uploads</th></tr>
+      {% for row in hierarchy %}
+      <tr><td>{{ row["facility_id"] }}</td><td>{{ row["instrument_id"] }}</td><td>{{ row["count"] }}</td></tr>
+      {% else %}
+      <tr><td colspan="3">No uploaded data yet.</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="card">
+    <h3>Recent Reports</h3>
+    <table>
+      <tr><th>When</th><th>Facility</th><th>Instrument</th><th>Status</th></tr>
+      {% for r in recent_reports %}
+      <tr>
+        <td>{{ r["created_at"] }}</td>
+        <td>{{ r["facility_id"] }}</td>
+        <td>{{ r["instrument_id"] }}</td>
+        <td>{{ "PASS" if r["overall_ok"] else "FAIL" }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">No reports yet.</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  {% if user["role"] == "manufacturer" %}
+    <p>Use the manufacturer area to upload public batch files and audit bundles for your facility.</p>
+    <p><a href="{{ url_for('manufacturer_dashboard') }}">Go to Manufacturer Dashboard</a></p>
+  {% else %}
+    <p>Use the auditor area to review uploaded files and run remote verification.</p>
+    <p><a href="{{ url_for('auditor_dashboard') }}">Go to Auditor Dashboard</a></p>
+  {% endif %}
+</div>
+{% endblock %}
