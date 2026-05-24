@@ -217,11 +217,16 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Ignore Git tokens
-*token*.txt
+# Secrets
+github_token.txt
+token.json
+credentials.json
+.env
 
-# Manufacturing scripts outputs
+# Generated data
 output/
-jobs/
 audit/
-reports/
+jobs/
+instance/
+*.db
+*.zip
