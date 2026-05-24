@@ -217,7 +217,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Manufacturing outputs
+# Manufacturing scripts outputs
 output/
 jobs/
 audit/
